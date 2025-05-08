@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hệ thống quản lý sân bóng</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body class="login-background">
+  <div class="login-container">
+    <h1><span class="icon">🎯</span> Hệ thống quản lý sân bóng Hà Nội</h1>
+    <div class="form-box">
+      <div class="tab">
+        <button id="login-tab" class="active">Đăng nhập</button>
+        <button id="register-tab">Đăng ký</button>
+      </div>
+
+      <!-- Đăng nhập -->
+      <form id="login-form">
+        <label for="login-username">Tên đăng nhập</label>
+        <input type="text" id="login-username" placeholder="Tên đăng nhập" required>
+        <label for="login-password">Mật khẩu</label>
+        <input type="password" id="login-password" placeholder="Mật khẩu" required>
+        <button type="button" class="submit-btn" onclick="login()">Đăng nhập</button>
+      </form>
+
+      <!-- Đăng ký -->
+      <form id="register-form" style="display: none;">
+        <label for="register-fullname">Họ và tên</label>
+        <input type="text" id="register-fullname" placeholder="Họ và tên" required>
+        <label for="register-username">Tên đăng nhập</label>
+        <input type="text" id="register-username" placeholder="Tên đăng nhập" required>
+        <label for="register-password">Mật khẩu</label>
+        <input type="password" id="register-password" placeholder="Mật khẩu" required>
+        <button type="button" class="submit-btn" onclick="register()">Đăng ký</button>
+      </form>
+
+      <p id="message"></p>
+    </div>
+  </div>
+
+  <script>
+    const loginTab = document.getElementById("login-tab");
+    const registerTab = document.getElementById("register-tab");
+    const loginForm = document.getElementById("login-form");
+    const registerForm = document.getElementById("register-form");
+
+    loginTab.addEventListener("click", () => {
+      loginTab.classList.add("active");
+      registerTab.classList.remove("active");
+      loginForm.style.display = "block";
+      registerForm.style.display = "none";
+    });
+
+    registerTab.addEventListener("click", () => {
+      registerTab.classList.add("active");
+      loginTab.classList.remove("active");
+      loginForm.style.display = "none";
+      registerForm.style.display = "block";
+    });
+
+    async function login() {
+      const username = document.getElementById('login-username').value;
+      const password = document.getElementById('login-password').value;
+      const message = document.getElementById('message');
+
+      try {
+        const res = await fetch('http://localhost:3000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          localStorage.setItem('currentUser', JSON.stringify(data.user));
+          window.location.href = 'home.html';
+        } else {
+          message.textContent = '❌ ' + data.error;
+        }
+      } catch (err) {
+        message.textContent = '⚠️ Phản hồi không hợp lệ từ server';
+      }
+    }
+
+    async function register() {
+      const fullname = document.getElementById('register-fullname').value;
+      const username = document.getElementById('register-username').value;
+      const password = document.getElementById('register-password').value;
+      const message = document.getElementById('message');
+
+      try {
+        const res = await fetch('http://localhost:3000/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fullname, username, password })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          message.textContent = '✅ Đăng ký thành công!';
+          loginTab.click();
+        } else {
+          message.textContent = '❌ ' + data.error;
+        }
+      } catch (err) {
+        message.textContent = '⚠️ Phản hồi không hợp lệ từ server';
+      }
+    }
+  </script>
+</body>
+</html>

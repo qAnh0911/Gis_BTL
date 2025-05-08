@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Phân quyền người dùng</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body class="home-background">
+  <div class="home-container">
+    <h1>🔐 Phân quyền tài khoản</h1>
+    <h2>Xin chào, <span id="username"></span>!</h2>
+
+    <div class="form-box">
+      <label for="username-input">Tên đăng nhập:</label>
+      <input type="text" id="username-input" placeholder="Nhập tên tài khoản...">
+
+      <label for="role-select">Chọn quyền:</label>
+      <select id="role-select">
+        <option value="owner">Chủ sân</option>
+        <option value="admin">Quản trị viên</option>
+      </select>
+
+      <button onclick="assignRole()">Cập nhật quyền</button>
+      <p id="message"></p>
+    </div>
+
+    <button onclick="window.location.href='home.html'" class="feature-btn">🏠 Về trang chủ</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('/api/me');
+        if (!res.ok) throw new Error("Không có quyền");
+
+        const data = await res.json();
+        const user = data.user;
+
+        if (!user || !user.is_admin) {
+          alert("Chỉ quản trị viên mới được phép truy cập.");
+          window.location.href = 'home.html';
+        } else {
+          document.getElementById('username').textContent = user.username;
+        }
+      } catch (err) {
+        alert("Không thể xác minh quyền truy cập.");
+        window.location.href = 'home.html';
+      }
+    });
+
+    async function assignRole() {
+      const username = document.getElementById('username-input').value;
+      const role = document.getElementById('role-select').value;
+      const message = document.getElementById('message');
+
+      try {
+        const res = await fetch('/api/phanquyen', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, role })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          message.textContent = '✅ Cập nhật thành công!';
+        } else {
+          message.textContent = '❌ ' + data.error;
+        }
+      } catch (err) {
+        message.textContent = '⚠️ Lỗi khi gửi yêu cầu.';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm sân bóng</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('san bong.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 40px auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: deeppink;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .coords {
+            display: flex;
+            gap: 10px;
+        }
+
+        .coords input {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: deeppink;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #d11273;
+        }
+        .btn-back {
+  display: inline-block;
+  margin-top: 15px;
+  background-color: #cccccc;
+  color: #333;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.btn-back:hover {
+  background-color: #b0b0b0;
+}
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>⚽ Thêm sân bóng</h2>
+        <form action="/add-stadium" method="POST">
+          <label for="name">Tên sân:</label>
+          <input type="text" id="name" name="name" required>
+      
+          <label for="address">Địa chỉ:</label>
+          <input type="text" id="address" name="address" required>
+      
+          <label for="hotline">Hotline:</label>
+          <input type="text" id="hotline" name="hotline" required>
+      
+          <label for="gia_thue_s">Giá thuê:</label>
+          <input type="text" id="gia_thue_s" name="gia_thue_s" required>
+      
+          <label>Tọa độ:</label>
+          <div class="coords">
+              <input type="text" id="latitude" name="latitude" placeholder="Latitude" required>
+              <input type="text" id="longitude" name="longitude" placeholder="Longitude" required>
+          </div>
+      
+          <label for="mo_ta">Mô tả:</label>
+          <input type="text" id="mo_ta" name="mo_ta">
+      
+          <button type="submit">💾 Thêm sân</button>
+          <a href="home.html" class="btn-back">⬅️ Quay lại trang chủ</a>
+      </form>
+      
+    </div>
+</body>
+</html>

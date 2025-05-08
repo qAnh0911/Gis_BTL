@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tra cứu sân bóng Hà Nội</title>
+
+  <!-- Bootstrap & Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+
+  <!-- CSS riêng -->
+  <link rel="stylesheet" href="style2.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body class="tracuu-page">
+  <!-- Navbar -->
+  <div class="top-bar d-flex justify-content-between align-items-center px-4 py-2">
+    <div class="d-flex align-items-center">
+      <i class="fas fa-futbol mr-2"></i>
+      <span class="top-bar-title">Hệ thống Quản Lý sân bóng Hà Nội</span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <span id="displayUsername" class="text-muted mr-3">Khách</span>
+      <a href="/home.html" class="btn btn-danger">
+        <i class="fas fa-arrow-left"></i> Quay Lại
+      </a>
+    </div>
+  </div>
+  
+
+  <!-- Giao diện tra cứu -->
+  <div class="main-layout">
+    <!-- Bên trái -->
+    <aside class="sidebar-left">
+      <h3>🔍 Tìm kiếm & Lọc</h3>
+      <input type="text" id="search-input" placeholder="Tìm kiếm sân bóng..."/>
+      <select id="filter-quan">
+        <option value="">CHỌN QUẬN BẠN MUỐN TÌM KIẾM</option>
+        <option value="Ba Đình">Ba Đình</option>
+        <option value="Hoàn Kiếm">Hoàn Kiếm</option>
+        <option value="Tây Hồ">Tây Hồ</option>
+        <option value="Long Biên">Long Biên</option>
+        <option value="Cầu Giấy">Cầu Giấy</option>
+        <option value="Đống Đa">Đống Đa</option>
+        <option value="Hai Bà Trưng">Hai Bà Trưng</option>
+        <option value="Hoàng Mai">Hoàng Mai</option>
+        <option value="Thanh Xuân">Thanh Xuân</option>
+        <option value="Từ Liêm">Từ Liêm</option>
+        <option value="Hà Đông">Hà Đông</option>
+        <option value="Thanh Trì">Thanh Trì</option>
+      </select>
+      <button id="btn-nearest">📍 Sân gần tôi</button>
+      <button id="btn-refresh">🔄 Làm mới</button>
+    </aside>
+
+    <!-- Bản đồ ở giữa -->
+    <section class="map-center">
+      <div id="map"></div>
+    </section>
+
+    <!-- Bên phải -->
+    <aside class="sidebar-right">
+      <h3>📋 Danh sách sân bóng</h3>
+      <div id="stadium-list" class="stadium-list"></div>
+    </aside>
+  </div>
+
+  <!-- JS riêng -->
+  <script src="server.js"></script>
+  <script>
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const display = document.getElementById('displayUsername');
+    if (currentUser && currentUser.username) {
+      display.textContent = currentUser.username;
+    } else {
+      display.textContent = 'Khách';
+    }
+  </script>  
+  <script src="js/map.js"></script>
+
+</body>
+</html>
