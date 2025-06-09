@@ -143,7 +143,7 @@
         document.getElementById('tenSan').value = san.ten_san || '';
         document.getElementById('diaChi').value = san.dia_chi || '';
         document.getElementById('hotline').value = san.hotline || '';
-        document.getElementById('giaThue').value = san.gia_thue_s || '';
+        document.getElementById('giaThue').value = san.gia_thue_san || '';
         document.getElementById('latitude').value = san.latitude || '';
         document.getElementById('longitude').value = san.longitude || '';
       } catch (err) {
@@ -163,7 +163,7 @@
         ten_san: document.getElementById('tenSan').value,
         dia_chi: document.getElementById('diaChi').value,
         hotline: document.getElementById('hotline').value,
-        gia_thue_s: document.getElementById('giaThue').value,
+        gia_thue_san: document.getElementById('giaThue').value,
         latitude: parseFloat(document.getElementById('latitude').value),   
         longitude: parseFloat(document.getElementById('longitude').value),
         trang_thai: document.getElementById('trangThai').value
